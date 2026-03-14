@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'vams_application'
 ]
 
 MIDDLEWARE = [
@@ -74,10 +75,13 @@ WSGI_APPLICATION = 'project_config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'VAMS_DB',
+        'USER': 'root',
+        'PASSWORD': 'A38fc252bAb@b',  # Change to your actual MariaDB password
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+    }}
 
 
 # Password validation
