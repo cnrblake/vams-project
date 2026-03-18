@@ -88,6 +88,8 @@ DATABASES = {
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.config(conn_max_age=600)
 
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
