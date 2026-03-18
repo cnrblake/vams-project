@@ -1,0 +1,46 @@
+{% extends 'vams_application/dashboard.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                <li class="breadcrumb-item active">Mitigation</li>
+            </ol>
+        </nav>
+
+        <div class="card shadow border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h5 class="mb-0">Mitigate: {{ finding.vuldefid.name }}</h5>
+            </div>
+            <div class="card-body p-4">
+                <div class="row mb-4">
+                    <div class="col-sm-6">
+                        <small class="text-muted d-block">Asset</small>
+                        <strong>{{ finding.assetid.hostname }}</strong>
+                    </div>
+                    <div class="col-sm-6">
+                        <small class="text-muted d-block">IP Address</small>
+                        <strong>{{ finding.assetid.ipaddress }}</strong>
+                    </div>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-4">
+                        <label class="form-label font-weight-bold">Action Taken</label>
+                        {{ form.actiontaken }}
+                        <div class="form-text text-muted">Please detail the mitigation action taken.</div>
+                    </div>
+
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                        <a href="{% url 'dashboard' %}" class="btn  me-md-2">Cancel</a>
+                        <button type="submit" class="btn btn-success px-4">Save & Close Finding</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

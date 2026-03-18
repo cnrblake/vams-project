@@ -2,27 +2,32 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>VAMS Dashboard</title>
+    <title>VAMS | Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
 
 <nav class="navbar navbar-dark bg-dark mb-4">
     <div class="container">
-        <span class="navbar-brand mb-0 h1">VAMS Vulnerability Asset Management System</span>
-        <span class="navbar-text text-white">Logged in as: <strong>{{ user.username }}</strong>
-        </span>
-        <form action="{% url 'logout' %}" method="post" class="d-inline">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-sm btn-outline-warning">Logout</button>
-        </form>
+        <span class="navbar-brand mb-0 h1">VAMS | Vulnerability Management</span>
+        <div class="d-flex align-items-center">
+            <span class="navbar-text text-white me-3">
+                User: <strong>{{ user.username }}</strong>
+            </span>
+            <form action="{% url 'logout' %}" method="post" class="d-inline">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-outline-warning">Logout</button>
+            </form>
+        </div>
     </div>
 </nav>
 
 <div class="container">
+    {% block content %}
+
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>High-Risk Findings Dashboard</h2>
-        <a href="/admin/" class="btn btn-outline-secondary">Go to Admin Panel</a>
+        <h2>Open Findings</h2>
+        <a href="/admin/" class="btn btn-outline-secondary btn-sm">Admin Panel</a>
     </div>
 
     <div class="card shadow-sm">
@@ -32,8 +37,7 @@
                 <tr>
                     <th>Hostname</th>
                     <th>Vulnerability</th>
-                    <th>CVE ID</th>
-                    <th>Risk Score</th>
+                    <th>Risk</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -43,7 +47,6 @@
                 <tr>
                     <td>{{ finding.assetid.hostname }}</td>
                     <td>{{ finding.vuldefid.name }}</td>
-                    <td>{{ finding.vuldefid.cve_id }}</td>
                     <td>{{ finding.vuldefid.basescore }}</td>
                     <td>
                         {% if finding.status == 'Open' %}
@@ -53,18 +56,18 @@
                         {% endif %}
                     </td>
                     <td>
-                        <a href="#" class="btn btn-sm btn-primary">Mitigate</a>
+                        <a href="{% url 'mitigate_finding' finding.findingid %}" class="btn btn-sm btn-primary">Mitigate</a>
                     </td>
                 </tr>
                 {% empty %}
-                <tr>
-                    <td colspan="6" class="text-center py-4 text-muted">No findings currently logged in the system.</td>
-                </tr>
+                <tr><td colspan="5" class="text-center py-4 text-muted">No findings found.</td></tr>
                 {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
+
+    {% endblock %}
 </div>
 
 </body>
